@@ -54,7 +54,7 @@ void loop()
 {
    int x,y,r,z = 0;   
    if (client.available()) {
-      string s = " ";
+      String s = " ";
       char c = client.read();
       if(c == ' ') {
 	 int maxCommandLength = 100;
