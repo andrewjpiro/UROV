@@ -86,7 +86,8 @@ void loop()
     delay(2);
   }
    
-  for (int i = -400; i <= 0; i++)
+   
+  for (int i = 400; i >= -400; i--)
   {
     md.setM3Speed(i);
 //    stopIfFault();
