@@ -70,15 +70,17 @@ if __name__ == "__main__":
 
 
     #TODO: Realize that this code immediately raises an error if there is no server to connect to
+    count = 0
     while True:
+        count += 1 #we'll print the x, y, z, r values every 5 runs through program
         try:
             j.update()
-            y = readAxis('Y') * 4
-            x = readAxis("X") * 4
-            z = readAxis('Z') * 4
-            u = readAxis('U') * 4
-            r = readAxis('R') * 4
-            v = readAxis('Z') * 4
+            y = readAxis('Y') * -4
+            x = readAxis("X") * -4
+            z = readAxis('Z') * -4
+            u = readAxis('U') * -4
+            r = readAxis('R') * -4
+            v = readAxis('Z') * -4
             b1 = readButton(1)
             b2 = readButton(2)
             b3 = readButton(3)
@@ -90,7 +92,8 @@ if __name__ == "__main__":
             b9 = readButton(9)
             b10 = readButton(10)
         
-            conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d} "%(x, y, z, r))
+            conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d}~"%(x, y, z, r))
+            
 #            print '''
 #            y: %s
 #            x: %s
@@ -105,6 +108,8 @@ if __name__ == "__main__":
             server.listen(1)
             print "Looking for Client to talk to...."
             conn, address = server.accept()
+        if count % 5 == 0:
+            print "{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d} "%(x, y, z, r)
         
         
         
