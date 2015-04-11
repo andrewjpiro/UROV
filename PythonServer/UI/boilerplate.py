@@ -2,7 +2,7 @@ __author__ = 'Aaron'
 
 import sys
 from PyQt4 import QtGui, QtCore
-from PythonServer.UI.Generated.generatedGUI import  Ui_MainWindow
+from Generated.generatedGUI import  Ui_MainWindow
 
 
 
