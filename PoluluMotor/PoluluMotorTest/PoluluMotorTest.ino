@@ -26,10 +26,13 @@ void setup()
  
 void loop()
 {
+//  md.setM1Speed(200);
+//  md.setM2Speed(200);
+//  md.setM3Speed(200);
+//  md.setM4Speed(200);
   for (int i = 0; i <= 400; i++)
   {
     md.setM1Speed(i);
-//    stopIfFault();
     if (i%200 == 100)
     {
       Serial.print("M1 current: ");
@@ -41,7 +44,6 @@ void loop()
   for (int i = 400; i >= -400; i--)
   {
     md.setM1Speed(i);
-//    stopIfFault();
     if (i%200 == 100)
     {
       Serial.print("M1 current: ");
@@ -53,7 +55,6 @@ void loop()
   for (int i = -400; i <= 0; i++)
   {
     md.setM2Speed(i);
-//    stopIfFault();
     if (i%200 == 100)
     {
       Serial.print("M1 current: ");
@@ -65,7 +66,6 @@ void loop()
   for (int i = 0; i <= 400; i++)
   {
     md.setM2Speed(i);
-//    stopIfFault();
     if (i%200 == 100)
     {
       Serial.print("M2 current: ");
@@ -73,24 +73,44 @@ void loop()
     }
     delay(2);
   }
-   
-  for (int i = 400; i >= -400; i--)
+//-----------------------------
+
+for (int i = 0; i <= 400; i++)
   {
-    md.setM4Speed(i);
-//    stopIfFault();
+    md.setM3Speed(i);
     if (i%200 == 100)
     {
-      Serial.print("M2 current: ");
-      //Serial.println(md.getM2CurrentMilliamps());
+      Serial.print("M1 current: ");
+      //Serial.println(md.getM1CurrentMilliamps());
     }
     delay(2);
   }
-   
    
   for (int i = 400; i >= -400; i--)
   {
     md.setM3Speed(i);
-//    stopIfFault();
+    if (i%200 == 100)
+    {
+      Serial.print("M1 current: ");
+      //Serial.println(md.getM1CurrentMilliamps());
+    }
+    delay(2);
+  }
+   
+  for (int i = -400; i <= 0; i++)
+  {
+    md.setM4Speed(i);
+    if (i%200 == 100)
+    {
+      Serial.print("M1 current: ");
+      //Serial.println(md.getM1CurrentMilliamps());
+    }
+    delay(2);
+  }
+ 
+  for (int i = 0; i <= 400; i++)
+  {
+    md.setM4Speed(i);
     if (i%200 == 100)
     {
       Serial.print("M2 current: ");
@@ -99,3 +119,4 @@ void loop()
     delay(2);
   }
 }
+   

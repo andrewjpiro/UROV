@@ -18,6 +18,9 @@ byte ip[] = {211, 255, 132, 49};
 
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x40, 0x9F};
 int port = 1900;
+
+int x,y,r,z;  
+String s = " ";
 EthernetClient client;
 
 void setup() {
@@ -52,21 +55,26 @@ void setup() {
 
 void loop()
 {
-   int x,y,r,z = 0;   
+    
    if (client.available()) {
-      String s = " ";
-      char c = client.read();
-      if(c == ' ') {
-	 int maxCommandLength = 100;
-         char[maxCommandLength] command;
-         s.toCharArray(command, maxCommandLength);
-             
-         JsonObject& root = jsonBuffer.parseObject(command);
 
+      char c = client.read();
+      if(c == '~') {
+	 int maxCommandLength = 100;
+         char command[maxCommandLength];
+         s.toCharArray(command, maxCommandLength);  
+         JsonObject& root = jsonBuffer.parseObject(command);
+         //Serial.print("JSON OBJECT: ");
+         //root.printTo(Serial);
 	 x = root["X"];
          y = root["Y"];
          r = root["R"];
          z = root["Z"];
+         
+         md.setM1Speed(x);
+         md.setM2Speed(y);
+         md.setM3Speed(r);
+         md.setM4Speed(z);
          
          printDebugInfo(x, y, z, r, s); 
 	 
@@ -80,11 +88,11 @@ void loop()
       char sensor = 'a';
       client.println(sensor);
    }
+
 }
 
 void printDebugInfo(int x, int y, int z, int r, String s) {    
    Serial.println(s);
-   
    Serial.print("X:");
    Serial.println(x);
    Serial.print("Y:");

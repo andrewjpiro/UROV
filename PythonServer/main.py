@@ -4,6 +4,7 @@ import socket
 import json
 from sfml.window import Joystick as j
 import time
+from PythonServer.UI.boilerplate import main as GUImain
 
 
 def readAxis(axis):
@@ -66,8 +67,7 @@ if __name__ == "__main__":
     output = conn.recv(2048)
     print "Message received from client:"
     print output
-
-
+    GUImain() #OPENS THE GUI
 
     #TODO: Realize that this code immediately raises an error if there is no server to connect to
     count = 0
