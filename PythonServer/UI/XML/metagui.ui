@@ -228,8 +228,8 @@
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
-   <receiver>pushButton</receiver>
-   <slot>click()</slot>
+   <receiver>pushButton_2</receiver>
+   <slot>animateClick()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>515</x>
@@ -237,23 +237,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>515</x>
-     <y>51</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>pushButton</receiver>
-   <slot>showMenu()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>516</x>
-     <y>56</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>515</x>
-     <y>56</y>
+     <y>81</y>
     </hint>
    </hints>
   </connection>

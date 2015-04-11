@@ -1,10 +1,11 @@
 __author__ = 'Aaron'
 
 import sys
+
 from PyQt4 import QtGui, QtCore
 from Generated.generatedGUI import  Ui_MainWindow
 
-
+from connection import connectSignals
 
 class Example(QtGui.QMainWindow):
     def __init__(self):
@@ -19,14 +20,15 @@ class Example(QtGui.QMainWindow):
         self.setWindowTitle('Statusbar')
         self.show()
 
-
-
 def main():
 
     app = QtGui.QApplication(sys.argv)
     ui = Ui_MainWindow()
     ex = Example()
     ui.setupUi(ex)
+
+    connectSignals(ui)
+
     sys.exit(app.exec_())
 
 
