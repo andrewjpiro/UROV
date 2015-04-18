@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'XML\metagui.ui'
 #
-# Created: Sat Apr 11 10:35:03 2015
+# Created: Sat Apr 18 10:49:36 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -77,6 +77,22 @@ class Ui_MainWindow(object):
         self.pushButton_4 = QtGui.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(460, 140, 111, 21))
         self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.lcdNumber_7 = QtGui.QLCDNumber(self.centralwidget)
+        self.lcdNumber_7.setGeometry(QtCore.QRect(280, 30, 161, 31))
+        self.lcdNumber_7.setObjectName(_fromUtf8("lcdNumber_7"))
+        self.lcdNumber_8 = QtGui.QLCDNumber(self.centralwidget)
+        self.lcdNumber_8.setGeometry(QtCore.QRect(280, 90, 161, 31))
+        self.lcdNumber_8.setObjectName(_fromUtf8("lcdNumber_8"))
+        self.lcdNumber_9 = QtGui.QLCDNumber(self.centralwidget)
+        self.lcdNumber_9.setGeometry(QtCore.QRect(280, 140, 161, 31))
+        self.lcdNumber_9.setObjectName(_fromUtf8("lcdNumber_9"))
+        self.label_7 = QtGui.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(410, 10, 46, 13))
+        self.label_7.setObjectName(_fromUtf8("label_7"))
+        self.label_8 = QtGui.QLabel(self.centralwidget)
+        self.label_8.setGeometry(QtCore.QRect(380, 70, 46, 13))
+        self.label_8.setText(_fromUtf8(""))
+        self.label_8.setObjectName(_fromUtf8("label_8"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 604, 21))
@@ -90,8 +106,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuUROV.menuAction())
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.pushButton.click)
-        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.pushButton.showMenu)
+        QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("clicked()")), self.pushButton_2.animateClick)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -106,5 +121,6 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Solenoid 2", None))
         self.pushButton_3.setText(_translate("MainWindow", "Electromagnet 1", None))
         self.pushButton_4.setText(_translate("MainWindow", "Push-button Motor", None))
+        self.label_7.setText(_translate("MainWindow", "Depth", None))
         self.menuUROV.setTitle(_translate("MainWindow", "UROV", None))
 
