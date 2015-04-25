@@ -58,72 +58,75 @@ class Server(QObject):
     x = pyqtSignal(int)
     count = 0
     def __init__(self):
-        # self.host = socket.gethostbyname(socket.gethostname())
-        # print "HOST: ", self.host
-        # self.port = 1900
-        # self.address = (self.host, self.port)
-        # self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self.server.bind((self.address))
-        # self.server.listen(1)
-        # print "Looking for Client to talk to...."
-        # self.conn, self.address = self.server.accept()
-        # output = self.conn.recv(2048)
-        # print "Message received from client:"
-        # print output
-        # self.count = 0
+        #self.host = socket.gethostbyaddr('211.255.132.121')[2][0]
+        self.host = socket.gethostbyname(socket.gethostname())
+        print "HOST: ", self.host
+        #print socket.gethostbyaddr('211.255.132.121') #Make sure the host exists!
+        self.port = 1900 #NOTE: PORT MAY LEAD TO socket errno 10048; in which case, switch the sockets being used for the Arduino.
+        self.address = (self.host, self.port)
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server.bind((self.address))
+        self.server.listen(1)
+        print "Looking for Client to talk to...."
+        self.conn, self.address = self.server.accept()
+        output = self.conn.recv(2048)
+        print "Message received from client:"
+        print output
+        self.count = 0
 
         self.y = pyqtSignal(int)
         self.z = pyqtSignal(int)
         self.u = pyqtSignal(int)
         self.r = pyqtSignal(int)
         self.v = pyqtSignal(int)
+        self.count = 0
         super(Server, self).__init__()
         print "FINISHED INITIALIZING"
 
 
     def update(self):
-        #count += 1 #we'll print the x, y, z, r values every 5 runs through program
+        self.count += 1
         try:
-        #     j.update()
-        #     self.y.emit(readAxis('Y') * -4)
-        #     y = readAxis('Y') * -4
-            print "EMITTING X"
-            #x_val = readAxis("X") * -4
-            x_val = random.randint(0, 100)
-            self.x.emit(x_val)
-        #     self.z.emit(readAxis('Z') * -4)
-        #     z = readAxis('Z') * -4
-        #     self.u.emit(readAxis('U') * -4)
-        #     u = readAxis('U') * -4
-        #     self.r.emit(readAxis('R') * -4)
-        #     r = readAxis('R') * -4
-        #     self.v.emit(readAxis('V') * -4)
-        #     v = readAxis('Z') * -4
-        #     b1 = readButton(1)
-        #     b2 = readButton(2)
-        #     b3 = readButton(3)
-        #     b4 = readButton(4)
-        #     b5 = readButton(5)
-        #     b6 = readButton(6)
-        #     b7 = readButton(7)
-        #     b8 = readButton(8)
-        #     b9 = readButton(9)
-        #     b10 = readButton(10)
-        #     self.conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d}~"%(x, y, z, r))
-        #     time.sleep(0.1)
+            j.update()
+            #self.y.emit(readAxis('Y') * -4)
+            y = readAxis('Y') * -4
+            x = readAxis("X") * -4
+            #x_val = random.randint(0, 100)
+            #self.x.emit(x_val)
+            #self.z.emit(readAxis('Z') * -4)
+            z = readAxis('Z') * -4
+            #self.u.emit(readAxis('U') * -4)
+            u = readAxis('U') * -4
+            #self.r.emit(readAxis('R') * -4)
+            r = readAxis('R') * -4
+            #self.v.emit(readAxis('V') * -4)
+            v = readAxis('Z') * -4
+            b1 = readButton(1)
+            b2 = readButton(2)
+            b3 = readButton(3)
+            b4 = readButton(4)
+            b5 = readButton(5)
+            b6 = readButton(6)
+            b7 = readButton(7)
+            b8 = readButton(8)
+            b9 = readButton(9)
+            b10 = readButton(10)
+            self.conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d}~"%(x, y, z, r))
+            time.sleep(0.1)
         except socket.error as error:
             print "ERROR CAUGHT."
             self.server.listen(1)
             print "Looking for Client to talk to...."
             conn, address = self.server.accept()
-        # if self.count % 5 == 0:
-        #     print "{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d} "%(x, y, z, r)
+        if self.count % 5 == 0:
+            print "{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d} "%(x, y, z, r)
 
 
 
 if __name__ == '__main__':
     server = Server()
-    server.update()
+    while True:
+        server.update()
         
         
     
