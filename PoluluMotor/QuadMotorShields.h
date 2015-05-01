@@ -33,15 +33,15 @@ class QuadMotorShields
   private:
     unsigned char _INA1;
     unsigned char _INB1;
-    static const unsigned char _PWM1 = 3; //M1PWM for Polu #1
+    static const unsigned char _PWM1 = 5; //M1PWM for Polu #1
     unsigned char _EN1DIAG1;
     unsigned char _CS1;
     unsigned char _INA2;
     unsigned char _INB2;
-    static const unsigned char _PWM2 = 5; //M2PWM for Polu #1
+	static const unsigned char _PWM2 = 6; //M2PWM for Polu #1
     unsigned char _EN2DIAG2;
     unsigned char _CS2;
-	static const unsigned char _PWM3 = 9; // M1PWM for Plolu #2 
+	static const unsigned char _PWM3 = 10; // M1PWM for Plolu #2 
 	unsigned char _INA3;
 	unsigned char _INB3; 
 	unsigned char _EN3DIAG3;
