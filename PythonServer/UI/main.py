@@ -98,7 +98,7 @@ class Server(QObject):
             #self.u.emit(readAxis('U') * -4)
             u = readAxis('U') * -4
             #self.r.emit(readAxis('R') * -4)
-            r = readAxis('R') * -4
+            #r = readAxis('R') * -4
             #self.v.emit(readAxis('V') * -4)
             v = readAxis('Z') * -4
             b1 = readButton(1)
@@ -111,16 +111,21 @@ class Server(QObject):
             b8 = readButton(8)
             b9 = readButton(9)
             b10 = readButton(10)
-            self.conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d}~"%(x, y, z, r))
+            self.conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d}~"%(x, y, z)) ##HEREIN LIES THE PROBLEM?!
+            #self.conn.send("{\X\":0,\"Y\":0,\"Z\":0}~")
             time.sleep(0.1)
-        except socket.error as error:
+            # output = self.conn.recv(2048)
+            # if '#' in output:
+            #     raise Exception("LOST MEANINGFUL CONNECTION WITH SERVER.")
+        except:
             print "ERROR CAUGHT."
             self.server.listen(1)
-            print "Looking for Client to talk to...."
-            conn, address = self.server.accept()
+            print "RECONNECTING...."
+            self.conn, self.address = self.server.accept()
         if self.count % 5 == 0:
-            print "{\"X\":%d,\"Y\":%d,\"Z\":%d,\"R\":%d} "%(x, y, z, r)
-
+            print "PRODUCED VALUES : {\"X\":%d,\"Y\":%d,\"Z\":%d} "%(x, y, z)
+            output = self.conn.recv(2048)
+            print "RECIEVED VALUES: %s" % (output)
 
 
 if __name__ == '__main__':
