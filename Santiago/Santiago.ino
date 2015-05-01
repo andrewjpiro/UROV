@@ -72,10 +72,20 @@ void loop()
          r = root["R"];
          z = root["Z"];
          
-         md.setM1Speed(x);
-         md.setM2Speed(y);
-         md.setM3Speed(r);
-         md.setM4Speed(z);
+         //new function at line 104
+         
+         cX = process_data(root["X"]); 
+         cY = process_data(root["Y"]);
+         cR = process_data(root["R"]);
+         cZ = process_data(root["Z"]);
+           
+         md.setM1Speed(cX);
+         md.setM2Speed(cY);
+         md.setM3Speed(cR);
+         md.setM4Speed(cZ);
+         
+         printDebugInfo(x, y, z, r, s);
+         printDebugInfo(cX, cY, cZ, cR, s); 
          if(count%10==0){
            printDebugInfo(x, y, z, r, s); 
 	 }
@@ -90,6 +100,12 @@ void loop()
       client.println(sensor);
    }
 
+}
+// trying to convert the data to integer
+int process_data (const char * data)
+{
+     int x = atoi(data); 
+     return x;
 }
 
 void printDebugInfo(int x, int y, int z, int r, String s) {    
