@@ -1,3 +1,50 @@
+
+Conversation opened. 1 unread message.
+
+Skip to content
+Using Gmail with screen readers
+	“Andrew Pirondini”
+	abartl02
+	archang
+	Jesse Tambornini
+	Keiran Hansen
+	Keiran Hansen
+	Nick Tuong
+	rtakatsu
+	Shelby Boyd
+	Tyler Cottle
+ 
+ 
+More 
+1 of 356
+ 
+Updated header/cpp files for quadmotorshields
+Inbox
+	x
+aarontpze@yahoo.com
+	
+Attachments3:25 PM (5 minutes ago)
+		
+to me
+Here are the updated header/cpp files. Sorry I can’t make it today but I had pre-existing plans for today.
+2 Attachments
+Preview attachment QuadMotorShields.cpp
+[C++]
+Preview attachment QuadMotorShields.h
+[C]
+	
+Click here to Reply or Forward
+0.97 GB (6%) of 15 GB used
+Manage
+Terms - Privacy
+Last account activity: 56 minutes ago
+Details
+	
+	
+	“Aaron Parisi”
+Show details
+QuadMotorShields.h
+
 #ifndef QuadMotorShields_h
 #define QuadMotorShields_h
 
@@ -33,15 +80,15 @@ class QuadMotorShields
   private:
     unsigned char _INA1;
     unsigned char _INB1;
-    static const unsigned char _PWM1 = 3; //M1PWM for Polu #1
+    static const unsigned char _PWM1 = 5; //M1PWM for Polu #1
     unsigned char _EN1DIAG1;
     unsigned char _CS1;
     unsigned char _INA2;
     unsigned char _INB2;
-    static const unsigned char _PWM2 = 5; //M2PWM for Polu #1
+	static const unsigned char _PWM2 = 6; //M2PWM for Polu #1
     unsigned char _EN2DIAG2;
     unsigned char _CS2;
-	static const unsigned char _PWM3 = 9; // M1PWM for Plolu #2 
+	static const unsigned char _PWM3 = 10; // M1PWM for Plolu #2 
 	unsigned char _INA3;
 	unsigned char _INB3; 
 	unsigned char _EN3DIAG3;
@@ -53,3 +100,5 @@ class QuadMotorShields
 };
 
 #endif
+
+Displaying QuadMotorShields.cpp.

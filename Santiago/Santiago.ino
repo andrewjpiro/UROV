@@ -14,6 +14,7 @@ StaticJsonBuffer<200> clearJson;
 // connections will fail.
 
 byte server[] = {211, 255, 132, 121};
+//byte server[] = {129, 65, 102, 107};  //TEMPORARY, QUICK-ACCESS ADDRESS
 byte ip[] = {211, 255, 132, 49};
 
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x40, 0x9F};
@@ -22,7 +23,7 @@ int port = 1900;
 int x,y,r,z;  
 String s = " ";
 EthernetClient client;
-
+int count = 0;
 void setup() {
    Serial.begin(9600);
 
@@ -55,7 +56,7 @@ void setup() {
 
 void loop()
 {
-    
+   count ++;
    if (client.available()) {
 
       char c = client.read();
@@ -75,9 +76,9 @@ void loop()
          md.setM2Speed(y);
          md.setM3Speed(r);
          md.setM4Speed(z);
-         
-         printDebugInfo(x, y, z, r, s); 
-	 
+         if(count%10==0){
+           printDebugInfo(x, y, z, r, s); 
+	 }
          jsonBuffer = clearJson;
          s = " ";
       }
@@ -102,3 +103,4 @@ void printDebugInfo(int x, int y, int z, int r, String s) {
    Serial.print("R:");
    Serial.println(r);
 }
+
