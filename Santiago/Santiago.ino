@@ -20,13 +20,16 @@ byte ip[] = {211, 255, 132, 49};
 byte mac[] = {0x90, 0xA2, 0xDA, 0x0E, 0x40, 0x9F};
 int port = 1900;
 
-int x,y,z;  
+int x,y,z,s1,s2;
 String s = " ";
 EthernetClient client;
 int count = 0;
 
-
 void setup() {
+   //ASSIGN DIGITAL PINS
+   pinMode(2,OUTPUT);
+   pinMode(3,OUTPUT);
+   //
    Serial.begin(9600);
 
    Ethernet.begin(mac, ip);
@@ -58,6 +61,8 @@ void setup() {
 
 void loop()
 {
+   digitalWrite(2, LOW);
+   digitalWrite(3, LOW);
    count++;
    if (client.available()) {
       char c = client.read();
@@ -68,18 +73,28 @@ void loop()
          JsonObject& root = jsonBuffer.parseObject(command);
          //Serial.print("JSON OBJECT: ");
          root.printTo(Serial);
-	 x = root["X"];
-         y = root["Y"];
+	 x = (int)root["X"];
+         y = (int)root["Y"];
          //r = root["R"];
-         z = root["Z"];
-         
+         z = (int)root["Z"];
+
          md.setM1Speed(x);
          md.setM2Speed(y);
-         md.setM3Speed(z);
+         md.setM3Speed(-z); //THIS IS CAUSING THE CONNECTION TO FAIL
          md.setM4Speed(z);
+         //write to the solenoids here
+         s1 = (int)root["S1"];
+         s2 = (int)root["S2"];
+         if(s1>0 or s1<0){
+           digitalWrite(2, HIGH); //write to pin(s) controlling s1
+         }
+         if(s2>0 or s1<0){
+           digitalWrite(3, HIGH); //write to pin(s) controlling s2
+         }
+         //
          if(count%2==0){
            printDebugInfo(x, y, z, s); 
-           client.print(s);
+           //client.print(s);
 	 }
          jsonBuffer = clearJson;
          s = " ";

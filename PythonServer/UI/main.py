@@ -94,24 +94,38 @@ class Server(QObject):
             #x_val = random.randint(0, 100)
             #self.x.emit(x_val)
             #self.z.emit(readAxis('Z') * -4)
-            z = readAxis('Z') * -4
+            #z = readAxis('Z') * -4
             #self.u.emit(readAxis('U') * -4)
-            u = readAxis('U') * -4
+            #u = readAxis('U') * -4
             #self.r.emit(readAxis('R') * -4)
             #r = readAxis('R') * -4
             #self.v.emit(readAxis('V') * -4)
-            v = readAxis('Z') * -4
-            b1 = readButton(1)
-            b2 = readButton(2)
-            b3 = readButton(3)
-            b4 = readButton(4)
-            b5 = readButton(5)
-            b6 = readButton(6)
-            b7 = readButton(7)
-            b8 = readButton(8)
-            b9 = readButton(9)
-            b10 = readButton(10)
-            self.conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d}~"%(x, y, z)) ##HEREIN LIES THE PROBLEM?!
+            #v = readAxis('Z') * -4
+            b0 = readButton(0) #On Rock Candy, corresponds to Button A
+            b4 = readButton(4) #On Rock Candy, corresponds to left bumper
+            b5 = readButton(5) #On Rock Candy, corresponds to right bumper
+            b3 = readButton(3) #on rock candy, Y button
+            b8 = readButton(8) #XY-joystick button on Rock Candy Controller
+
+            #Here we doctor the values on the controller
+            z = 0
+            x=-x
+            y=-y
+            sol1 = 0
+            sol2 = 0
+            if b4: #temporary workaround to the fact Z is retarded on my controller
+                z = 100
+            elif b5:
+                z = -100
+            if b8:
+                x = x/2
+                y = y/2
+            if b0:
+                sol1 = 100
+            if b3:
+                sol2 = 100
+            ##
+            self.conn.send("{\"X\":%d,\"Y\":%d,\"Z\":%d,\"S1\":%d,\"S2\":%d}~"%(x, y, z, sol1, sol2)) ##HEREIN LIES THE PROBLEM?!
             #self.conn.send("{\X\":0,\"Y\":0,\"Z\":0}~")
             time.sleep(0.1)
             # output = self.conn.recv(2048)
@@ -124,14 +138,12 @@ class Server(QObject):
             self.conn, self.address = self.server.accept()
         if self.count % 5 == 0:
             print "PRODUCED VALUES : {\"X\":%d,\"Y\":%d,\"Z\":%d} "%(x, y, z)
-            output = self.conn.recv(2048)
-            print "RECIEVED VALUES: %s" % (output)
+            # output = self.conn.recv(2048)
+            # print "RECIEVED VALUES: %s" % (output)
 
 
 if __name__ == '__main__':
     server = Server()
     while True:
         server.update()
-        
-        
-    
+

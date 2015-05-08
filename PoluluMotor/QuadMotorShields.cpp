@@ -14,22 +14,22 @@ TODO:
 QuadMotorShields::QuadMotorShields()
 {
   //Pin map, Bottom Pololu (yellow) IGNORE COLORS THEY LIE NOW!
-  _INA1 = 25; // M1INA, orange
-  _INB1 = 27; // M1INB , Yellow
-  _EN1DIAG1 = 23; // M1EN,  Black 
+  _INA1 = 31; // M1INA, orange
+  _INB1 = 33; // M1INB , Yellow
+  _EN1DIAG1 = 29; // M1EN,  Black 
   _CS1 =A0;  //M1CS , gray 
-  _INA2 = 24;   //M2INA2,Blue
-  _INB2 = 26;   //M2INB2,Red
-  _EN2DIAG2 = 22; //M2EN, Brown 
+  _INA2 = 25;   //M2INA2,Blue
+  _INB2 = 27;   //M2INB2,Red
+  _EN2DIAG2 = 23; //M2EN, Brown 
   _CS2 = A1; //M2CS White
 
   //Pin map, Top Pololu (pink)
-  _INA3 = 30; // M1INA, orange
-  _INB3 = 32; // M1INB , Yellow
-  _EN3DIAG3 = 28; // M1EN,  Black 
-  _INA4 = 31; //M2INA2,Blue
-  _INB4 = 33; //M2INB2,Red
-  _EN4DIAG4 = 29; //M2EN, Brown 
+  _INA3 = 42; // M1INA, orange //ORIGINALLY 30
+  _INB3 = 44; // M1INB , Yellow //ORIGINALLY 32
+  _EN3DIAG3 = 40; // M1EN,  Black //ORIGINALLY 28
+  _INA4 = 24; //M2INA2,Blue
+  _INB4 = 26; //M2INB2,Red
+  _EN4DIAG4 = 22; //M2EN, Brown 
 
 }
 
@@ -50,8 +50,8 @@ QuadMotorShields::QuadMotorShields(unsigned char INA1, unsigned char INB1, unsig
   _CS2 = CS2;
 
   //2nd set of motors ~ custom mapping
-  _INA3 = INA3;
-  _INB3 = INB3;
+  _INA3 = INA4; // originally INA3, but the motor is being a little bitch
+  _INB3 = INB4; // originally INB3
   _EN3DIAG3 = EN3DIAG3;
   _INA4 = INA4;
   _INB4 = INB4;
@@ -166,7 +166,7 @@ void QuadMotorShields::setM2Speed(int speed)
     digitalWrite(_INB2,LOW);
   }
 }
-// Set speed for motor 3, speed is a number betwenn -400 and 400
+// Set speed for motor 3, speed is a number between -400 and 400
 void QuadMotorShields::setM3Speed(int speed)
 {
 	unsigned char reverse = 0;
@@ -179,7 +179,7 @@ void QuadMotorShields::setM3Speed(int speed)
 	if (speed > 400)  // Max PWM dutycycle
 		speed = 400;
 #if defined(__AVR_ATmega168__)|| defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__)
-	OCR0A = speed;
+	OCRA = speed;
 #else
 	analogWrite(_PWM3, speed * 51 / 80); // default to using analogWrite, mapping 400 to 255
 #endif
@@ -199,7 +199,7 @@ void QuadMotorShields::setM3Speed(int speed)
 		digitalWrite(_INB3, LOW);
 	}
 }
-// Set speed for motor 4, speed is a number betwenn -400 and 400
+// Set speed for motor 4, speed is a number between -400 and 400
 void QuadMotorShields::setM4Speed(int speed)
 {
 	unsigned char reverse = 0;
@@ -215,6 +215,9 @@ void QuadMotorShields::setM4Speed(int speed)
 	OCR0B = speed;
 #else
 	analogWrite(_PWM4, speed * 51 / 80); // default to using analogWrite, mapping 400 to 255
+	analogWrite(_PWM3, speed * 51 / 80); // default to using analogWrite, mapping 400 to 255
+
+
 #endif
 	if (speed == 0)
 	{
@@ -231,6 +234,7 @@ void QuadMotorShields::setM4Speed(int speed)
 		digitalWrite(_INA4, HIGH);
 		digitalWrite(_INB4, LOW);
 	}
+	
 }
 // Set speed for motor 1 and 2
 void QuadMotorShields::setSpeeds(int m1Speed, int m2Speed, int m3Speed, int m4Speed)
