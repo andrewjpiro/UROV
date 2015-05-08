@@ -1,3 +1,4 @@
+
 #include "QuadMotorShields.h"
 
 // Constructors ////////////////////////////////////////////////////////////////
@@ -14,6 +15,7 @@ TODO:
 QuadMotorShields::QuadMotorShields()
 {
   //Pin map, Bottom Pololu (yellow) IGNORE COLORS THEY LIE NOW!
+<<<<<<< HEAD
   _INA1 = 31; // M1INA, orange
   _INB1 = 33; // M1INB , Yellow
   _EN1DIAG1 = 29; // M1EN,  Black 
@@ -30,6 +32,24 @@ QuadMotorShields::QuadMotorShields()
   _INA4 = 24; //M2INA2,Blue
   _INB4 = 26; //M2INB2,Red
   _EN4DIAG4 = 22; //M2EN, Brown 
+=======
+  _INA1 = 25; // M1INA, orange
+  _INB1 = 27; // M1INB , Yellow
+  _EN1DIAG1 = 23; // M1EN,  Black 
+  _CS1 =A0;  //M1CS , gray 
+  _INA2 = 24;   //M2INA2,Blue
+  _INB2 = 26;   //M2INB2,Red
+  _EN2DIAG2 = 22; //M2EN, Brown 
+  _CS2 = A1; //M2CS White
+
+  //Pin map, Top Pololu (pink)
+  _INA3 = 30; // M1INA, orange
+  _INB3 = 32; // M1INB , Yellow
+  _EN3DIAG3 = 28; // M1EN,  Black 
+  _INA4 = 31; //M2INA2,Blue
+  _INB4 = 33; //M2INB2,Red
+  _EN4DIAG4 = 29; //M2EN, Brown 
+>>>>>>> e2d935cb574d29ce795b90677b713245941633e2
 
 }
 
@@ -355,3 +375,5 @@ unsigned char QuadMotorShields::getM2Fault()
 {
   return !digitalRead(_EN2DIAG2);
 }
+
+Displaying QuadMotorShields.cpp.

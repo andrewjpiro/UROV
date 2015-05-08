@@ -1,3 +1,5 @@
+
+
 #include <QuadMotorShields.h>
 #include <ArduinoJson.h>
 
@@ -72,6 +74,7 @@ void loop()
          s.toCharArray(command, maxCommandLength);  
          JsonObject& root = jsonBuffer.parseObject(command);
          //Serial.print("JSON OBJECT: ");
+<<<<<<< HEAD
          root.printTo(Serial);
 	 x = (int)root["X"];
          y = (int)root["Y"];
@@ -95,6 +98,30 @@ void loop()
          if(count%2==0){
            printDebugInfo(x, y, z, s); 
            //client.print(s);
+=======
+         //root.printTo(Serial);
+	 x = root["X"];
+         y = root["Y"];
+         r = root["R"];
+         z = root["Z"];
+         
+         //new function at line 104
+         
+         cX = process_data(root["X"]); 
+         cY = process_data(root["Y"]);
+         cR = process_data(root["R"]);
+         cZ = process_data(root["Z"]);
+           
+         md.setM1Speed(cX);
+         md.setM2Speed(cY);
+         md.setM3Speed(cR);
+         md.setM4Speed(cZ);
+         
+         printDebugInfo(x, y, z, r, s);
+         printDebugInfo(cX, cY, cZ, cR, s); 
+         if(count%10==0){
+           printDebugInfo(x, y, z, r, s); 
+>>>>>>> e2d935cb574d29ce795b90677b713245941633e2
 	 }
          jsonBuffer = clearJson;
          s = " ";
@@ -107,6 +134,12 @@ void loop()
   else { //client is no longer available
     client.connect(server, port);
     }
+}
+// trying to convert the data to integer
+int process_data (const char * data)
+{
+     int x = atoi(data); 
+     return x;
 }
 
 
