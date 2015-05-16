@@ -1,7 +1,6 @@
-
-
-#include <QuadMotorShields.h>
-#include <ArduinoJson.h>
+//#include <Time.h> //found at Santiago/Time
+#include <QuadMotorShields.h> //Found at PoluluMotor
+#include <ArduinoJson.h> //Found at PoluluMotor
 
 #include <SPI.h>
 #include <Ethernet.h>
@@ -26,6 +25,8 @@ int x,y,z,s1,s2;
 String s = " ";
 EthernetClient client;
 int count = 0;
+int resetTime = 5; //reset if no communications in 10 seconds
+long timer = 0;
 
 void setup() {
    //ASSIGN DIGITAL PINS
@@ -33,12 +34,11 @@ void setup() {
    pinMode(3,OUTPUT);
    //
    Serial.begin(9600);
-
+   timer = startTimer();
    Ethernet.begin(mac, ip);
    delay(1000);
 
    Serial.println("connecting...");
-
    // if you get a connection, report back via serial:
    if (client.connect(server, port)) {
       Serial.println("connected.");
@@ -66,25 +66,23 @@ void loop()
    digitalWrite(2, LOW);
    digitalWrite(3, LOW);
    count++;
+   resetIfNotConnected(endTimer(timer)); //resets if not connected
    if (client.available()) {
       char c = client.read();
+      timer = startTimer(); //resets timer once char is read
       if(c == '~') {
 	 int maxCommandLength = 70;
          char command[maxCommandLength];
          s.toCharArray(command, maxCommandLength);  
          JsonObject& root = jsonBuffer.parseObject(command);
          //Serial.print("JSON OBJECT: ");
-<<<<<<< HEAD
-         root.printTo(Serial);
+         
+         //root.printTo(Serial);
+         
 	 x = (int)root["X"];
          y = (int)root["Y"];
          //r = root["R"];
          z = (int)root["Z"];
-
-         md.setM1Speed(x);
-         md.setM2Speed(y);
-         md.setM3Speed(-z); //THIS IS CAUSING THE CONNECTION TO FAIL
-         md.setM4Speed(z);
          //write to the solenoids here
          s1 = (int)root["S1"];
          s2 = (int)root["S2"];
@@ -95,33 +93,12 @@ void loop()
            digitalWrite(3, HIGH); //write to pin(s) controlling s2
          }
          //
-         if(count%2==0){
-           printDebugInfo(x, y, z, s); 
-           //client.print(s);
-=======
-         //root.printTo(Serial);
-	 x = root["X"];
-         y = root["Y"];
-         r = root["R"];
-         z = root["Z"];
-         
-         //new function at line 104
-         
-         cX = process_data(root["X"]); 
-         cY = process_data(root["Y"]);
-         cR = process_data(root["R"]);
-         cZ = process_data(root["Z"]);
-           
-         md.setM1Speed(cX);
-         md.setM2Speed(cY);
-         md.setM3Speed(cR);
-         md.setM4Speed(cZ);
-         
-         printDebugInfo(x, y, z, r, s);
-         printDebugInfo(cX, cY, cZ, cR, s); 
+         md.setM1Speed(x);
+         md.setM2Speed(y);
+         md.setM3Speed(-z); //The pins assigned to this function may cause the ethernet shield to fail
+         md.setM4Speed(z);
          if(count%10==0){
-           printDebugInfo(x, y, z, r, s); 
->>>>>>> e2d935cb574d29ce795b90677b713245941633e2
+           //printDebugInfo(x, y, z, s); 
 	 }
          jsonBuffer = clearJson;
          s = " ";
@@ -135,14 +112,23 @@ void loop()
     client.connect(server, port);
     }
 }
-// trying to convert the data to integer
-int process_data (const char * data)
-{
-     int x = atoi(data); 
-     return x;
+
+
+long startTimer(){ //returns starting time in millis
+   return millis();
+}
+int endTimer(long start){ //returns time elapsed in seconds
+   return (int)((millis() - start) / 1000);
 }
 
+void(* resetFunc) (void) = 0;//declare reset function at address 0
 
+void resetIfNotConnected(int lastCommunication){ //to keep us from manually resetting arduino
+   if (lastCommunication >= resetTime){
+      Serial.println("RESETTING");
+      resetFunc(); //call reset function BIATTCCHHH
+   }
+}
 
 void printDebugInfo(int x, int y, int z, String s) {    
    Serial.println(s);
