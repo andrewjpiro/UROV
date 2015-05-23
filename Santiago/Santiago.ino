@@ -1,4 +1,3 @@
-//#include <Time.h> //found at Santiago/Time
 #include <QuadMotorShields.h> //Found at PoluluMotor
 #include <ArduinoJson.h> //Found at PoluluMotor
 
@@ -25,7 +24,7 @@ int x,y,z,s1,s2;
 String s = " ";
 EthernetClient client;
 int count = 0;
-int resetTime = 5; //reset if no communications in 10 seconds
+int resetTime = 5000; //reset if no communications in 10 seconds
 long timer = 0;
 
 void setup() {
@@ -45,6 +44,7 @@ void setup() {
       client.println("This is a request from the client."); //print to server
    }
    else {
+      resetIfNotConnected(endTimer(timer)); //resets if not connected
       if (client.connect(server, port)) {
          Serial.println("connected.");
          client.println("This is a request from the client.");
@@ -53,6 +53,7 @@ void setup() {
           Serial.println("connection failed");
       }
    }
+   resetIfNotConnected(endTimer(timer)); //resets if not connected
 }
 
 /* loop()
@@ -118,7 +119,7 @@ long startTimer(){ //returns starting time in millis
    return millis();
 }
 int endTimer(long start){ //returns time elapsed in seconds
-   return (int)((millis() - start) / 1000);
+   return (int)(millis() - start);
 }
 
 void(* resetFunc) (void) = 0;//declare reset function at address 0
