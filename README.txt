@@ -3,15 +3,19 @@ in...SHIP shape. MEEEAAAAAAHHHHH.
 
 First and foremost, the following programs must be installed and functional:
 -Python 2.7 
--SFML (the .exe for Windows exists on the SFML site)
--PyQt4 (the .exe for Windows exists on the PyQt4 site)
+-SFML (the .exe for Windows exists on the SFML site) (found: http://www.sfml-dev.org/download.php)
+-PySFML (the .exe for Windows exists on the python-sfml site (found: http://www.python-sfml.org/download.html))
+-PyQt4 (the .exe for Windows exists on the PyQt4 site) (found: http://www.riverbankcomputing.com/software/pyqt/download)
 -Arduino
  -*To configure the Arduino to run the client code, you MUST do the following:
    --Arduino add library: UROV/PoluluMotor
    --Arduino add library: UROV/Santiago/ArduinoJson-master (this step may not work
 	for your computer, in which case you must download the .zip file, extract it 
-        anywhere on your computer, and add the folder ArduinoJson-master to the Arduino library.)
+        anywhere on your computer, and add the folder ArduinoJson-master to the Arduino
+	 library. (found: https://github.com/bblanchon/ArduinoJson)
 
+
+CONFIGURE your ethernet IPV4 address to the following: 211-255-132-121
 
 To UPLOAD the Arduino client-side code, navigate to UROV/Santiago and upload Santiago.ino
 to the ARduino.
