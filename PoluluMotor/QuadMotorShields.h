@@ -41,7 +41,7 @@ class QuadMotorShields
 	static const unsigned char _PWM2 = 6; //M2PWM for Polu #1
     unsigned char _EN2DIAG2;
     unsigned char _CS2;
-	static const unsigned char _PWM3 = 10; // M1PWM for Plolu #2 
+	static const unsigned char _PWM3 = 9; // M1PWM for Plolu #2 
 	unsigned char _INA3;
 	unsigned char _INB3; 
 	unsigned char _EN3DIAG3;
